@@ -2,12 +2,15 @@ package GRUPO._1.FLC21444DS.Livraria.servicos;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import GRUPO._1.FLC21444DS.Livraria.entidades.Livro;
+import GRUPO._1.FLC21444DS.Livraria.entidades.enums.LivroEstatus;
 import GRUPO._1.FLC21444DS.Livraria.repositorio.LivroRepositorio;
+import GRUPO._1.FLC21444DS.Livraria.servicos.execoes.ExecoesServicos;
 
 @Service
 public class LivroServicos {
@@ -48,6 +51,26 @@ public class LivroServicos {
 	public Livro incerirLivro(Livro obj) {
 		return repositorio.save(obj);
 	}
+	
+	public void mudancaDeEstatusReserva(Set<Livro> livro) {
+	   for(Livro  obj : livro) {	
+		if(obj.getEstatus() == LivroEstatus.DISPONIVEL) {
+			obj.setEstatus(LivroEstatus.RESERVADO);
+		}
+	   }
+	    throw new ExecoesServicos("O livro " + ((Livro) livro).getNome() + "ja esta reservado! ");
+	}
+	
+	public void mudancaDeEstatusDisponivel(Set<Livro> livro) {
+		   for(Livro  obj : livro) {	
+				if(obj.getEstatus() == LivroEstatus.RESERVADO) {
+					obj.setEstatus(LivroEstatus.DISPONIVEL);
+				}
+			   }
+			    throw new ExecoesServicos("O livro " + ((Livro) livro).getNome() + "nao esta reservado! ");
+			}
+	
+
 	
 }
 

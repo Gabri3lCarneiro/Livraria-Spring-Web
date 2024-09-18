@@ -14,16 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import GRUPO._1.FLC21444DS.Livraria.entidades.Reservas;
-import GRUPO._1.FLC21444DS.Livraria.repositorio.ReservasRepositorio;
 import GRUPO._1.FLC21444DS.Livraria.servicos.ReservasServicos;
 
 
 @RestController
 @RequestMapping("/reservas")
 public class ReservasControlador {
-
-	@Autowired
-	private ReservasRepositorio ur;
 
 	@Autowired
 	private ReservasServicos servicos;
@@ -40,7 +36,7 @@ public class ReservasControlador {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Reservas> findByid(@PathVariable Long id) {
-		Reservas obj = ur.getReferenceById(id);
+		Reservas obj = servicos.encontrarPoId(id);
 		return ResponseEntity.ok().body(obj);
         
 	}

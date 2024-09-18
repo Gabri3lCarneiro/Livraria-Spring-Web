@@ -3,6 +3,11 @@ package GRUPO._1.FLC21444DS.Livraria.entidades;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,12 +27,15 @@ public class Usuario implements Serializable {
 	    private String cpf;        
 	    private String nome;                                                                                                                                                             
 	    private String email; 
+	    
+	    @DateTimeFormat(pattern = "dd/MM/yyyy")
 	    private Date dataDeNascimento;
 	    private String endereco;
 	    
+	    
 	    @OneToOne(mappedBy = "usuario")
 	    private Reservas reservas;
-	    
+	 
 	    
 		public Usuario() {
 			
@@ -92,8 +100,16 @@ public class Usuario implements Serializable {
 		public void setEndereco(String endereco) {
 			this.endereco = endereco;
 		}
-
+		@JsonIgnore
+		public Reservas getReservas() {
+			return reservas;
+		}
+		@JsonIgnore
+		public void setReservas(Reservas reservas) {
+			this.reservas = reservas;
+		}
 		
+
 		@Override
 		public int hashCode() {
 			return Objects.hash(cpf, id);

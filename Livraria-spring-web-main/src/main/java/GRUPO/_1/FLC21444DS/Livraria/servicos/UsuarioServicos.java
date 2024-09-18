@@ -16,6 +16,7 @@ public class UsuarioServicos {
 	private UsuarioRepositorio repositorio;
 	
 	
+	
 	public List<Usuario> buscarTodos(){
 		return repositorio.findAll();
 	}
@@ -47,6 +48,9 @@ public class UsuarioServicos {
 	public Usuario incerirUsuario(Usuario obj) {
 		return repositorio.save(obj);
 	}
+	
+	
+	
 	
 }
 
