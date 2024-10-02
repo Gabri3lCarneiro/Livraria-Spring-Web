@@ -46,23 +46,26 @@ public class ReservasServicos {
 		reserva.setLivro(obj.getLivro());
 		reserva.setUsuario(obj.getUsuario());
 		reserva.setDataDevolucaoPrevista(obj.getDataDevolucaoPrevista());
+		reservasRepositorio.save(obj);
 	}
 	
 	public Reservas incerirReservas(Reservas obj) {
 		try {
-			for(int i =0; i <= obj.getLivro().size(); i++) {
+
+ 			for(int i =0; i <= obj.getLivro().size(); i++) {
 				if(obj.getLivro().get(i).getEstatus() == LivroEstatus.DISPONIVEL) {
 					obj.getLivro().get(i).setEstatus(LivroEstatus.RESERVADO); 
 					obj.getLivro().get(i).setReservas(obj);
-					livroRepositorio.save(obj.getLivro().get(i));
-					reservasRepositorio.save(obj);
 				}
 			}
 			return reservasRepositorio.save(obj);
 			
 		} catch (RuntimeException e) {
 			throw new ExecoesServicos(e.getMessage());
+		}finally {
+			return reservasRepositorio.save(obj);
 		}
+		
 	}
 	
 }

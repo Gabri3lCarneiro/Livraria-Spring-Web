@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,8 @@ public class Usuario implements Serializable {
 	    private String cpf;        
 	    private String nome;                                                                                                                                                             
 	    private String email; 
+	    
+	    @DateTimeFormat(pattern = "dd/MM/yyyy")
 	    private Date dataDeNascimento;
 	    private String endereco;
 	    

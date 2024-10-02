@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,14 +24,20 @@ public class Reservas implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataReserva;
+	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataDevolucaoPrevista;
+	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataDevolucaoReal;
 
     @OneToOne
     private Usuario usuario;
     
-    @OneToMany(mappedBy = "reservas")
+    @OneToMany(mappedBy = "reservas", cascade=CascadeType.PERSIST)
     private List<Livro> livro = new ArrayList();
 
     public Reservas() {

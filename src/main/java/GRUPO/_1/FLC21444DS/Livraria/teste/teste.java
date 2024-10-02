@@ -17,6 +17,7 @@ import GRUPO._1.FLC21444DS.Livraria.entidades.enums.LivroEstatus;
 import GRUPO._1.FLC21444DS.Livraria.repositorio.LivroRepositorio;
 import GRUPO._1.FLC21444DS.Livraria.repositorio.ReservasRepositorio;
 import GRUPO._1.FLC21444DS.Livraria.repositorio.UsuarioRepositorio;
+import GRUPO._1.FLC21444DS.Livraria.servicos.ReservasServicos;
 
 @Configuration
 @Profile("test")
@@ -31,6 +32,8 @@ public class teste implements CommandLineRunner{
 	@Autowired
 	private ReservasRepositorio reservasRepositorio;
 	
+	@Autowired
+	private ReservasServicos reservasServicos;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -53,7 +56,7 @@ public class teste implements CommandLineRunner{
 		
 		
 		Reservas r1 = new Reservas(null, new Date(), new Date(), new Date(), u3, list);
-	    reservasRepositorio.saveAll(Arrays.asList(r1));
+		reservasServicos.incerirReservas(r1);
 		
 	}
 

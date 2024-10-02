@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import GRUPO._1.FLC21444DS.Livraria.entidades.enums.LivroEstatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +25,9 @@ public class Livro implements Serializable {
 	private Long id;                                                                                                                                                                                                          
     private String isbn;                                       
     private String nome;                                        
-    private String autor;                                     
+    private String autor;   
+    
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataDePubliicacao;                               
     private String genero;                                      
     private Integer estatus;
