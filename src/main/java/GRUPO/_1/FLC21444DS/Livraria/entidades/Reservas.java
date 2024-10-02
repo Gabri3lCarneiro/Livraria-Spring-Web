@@ -1,8 +1,9 @@
 package GRUPO._1.FLC21444DS.Livraria.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,14 +30,14 @@ public class Reservas implements Serializable {
     private Usuario usuario;
     
     @OneToMany(mappedBy = "reservas")
-    private Set<Livro> livro = new HashSet<>();
+    private List<Livro> livro = new ArrayList();
 
     public Reservas() {
     	
     }
     
 	public Reservas(Long id, Date dataReserva, Date dataDevolucaoPrevista, Date dataDevolucaoReal, Usuario usuario,
-			Set<Livro> livro) {
+			List<Livro> livro) {
 		super();
 		this.id = id;
 		this.dataReserva = dataReserva;
@@ -87,11 +88,11 @@ public class Reservas implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Set<Livro> getLivro() {
+	public List<Livro> getLivro() {
 		return livro;
 	}
 	
-	public void setLivro(Set<Livro> livro) {
+	public void setLivro(List<Livro> livro) {
 		this.livro = livro;
 	}
 

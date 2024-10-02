@@ -7,34 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import GRUPO._1.FLC21444DS.Livraria.entidades.Reservas;
+import GRUPO._1.FLC21444DS.Livraria.entidades.enums.LivroEstatus;
+import GRUPO._1.FLC21444DS.Livraria.repositorio.LivroRepositorio;
 import GRUPO._1.FLC21444DS.Livraria.repositorio.ReservasRepositorio;
 
 @Service
 public class ReservasServicos {
 
 	@Autowired
-	private ReservasRepositorio repositorio;
+	private ReservasRepositorio reservasRepositorio;
 	
+	@Autowired
+	private LivroRepositorio livroRepositorio;
 	
 	public List<Reservas> buscarTodos(){
-		return repositorio.findAll();
+		return reservasRepositorio.findAll();
 	}
 	
 	public Reservas encontrarPoId(Long id) {
-		Optional<Reservas> obj = repositorio.findById(id);
+		Optional<Reservas> obj = reservasRepositorio.findById(id);
 		return obj.get();
 	}
 	
 	public void removerPorId(Long id) {
-		repositorio.deleteById(id);
+		reservasRepositorio.deleteById(id);
 		
 	}
 	
 	public Reservas atualizarDadosReservas(Reservas reserva, Long id) {
 		
-		Reservas obj = repositorio.getReferenceById(id);
+		Reservas obj = reservasRepositorio.getReferenceById(id);
 		atualizarDados(reserva, obj);
-		return repositorio.save(obj);
+		return reservasRepositorio.save(obj);
 	}
 
 	private void atualizarDados(Reservas reserva, Reservas obj) {
@@ -45,7 +49,20 @@ public class ReservasServicos {
 	}
 	
 	public Reservas incerirReservas(Reservas obj) {
-		return repositorio.save(obj);
+		try {
+			for(int i =0; i <= obj.getLivro().size(); i++) {
+				if(obj.getLivro().get(i).getEstatus() == LivroEstatus.DISPONIVEL) {
+					obj.getLivro().get(i).setEstatus(LivroEstatus.RESERVADO); 
+					obj.getLivro().get(i).setReservas(obj);
+					livroRepositorio.save(obj.getLivro().get(i));
+					reservasRepositorio.save(obj);
+				}
+			}
+			return reservasRepositorio.save(obj);
+			
+		} catch (RuntimeException e) {
+			throw new ExecoesServicos(e.getMessage());
+		}
 	}
 	
 }

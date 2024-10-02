@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import GRUPO._1.FLC21444DS.Livraria.entidades.enums.LivroEstatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +38,7 @@ public class Livro implements Serializable {
     
     
 	public Livro(Long id, String iSBN, String nome, String autor, Date dataDePubliicacao, String genero,
-			Integer estatus) {
+			LivroEstatus estatus) {
 		super();
 		this.id = id;
 		this.isbn = iSBN;
@@ -45,7 +46,7 @@ public class Livro implements Serializable {
 		this.autor = autor;
 		this.dataDePubliicacao = dataDePubliicacao;
 		this.genero = genero;
-		this.estatus = estatus;
+		setEstatus(estatus);
 	}
 
 
@@ -97,12 +98,34 @@ public class Livro implements Serializable {
 		this.genero = genero;
 	}
 
-	public Integer getEstatus() {
-		return estatus;
+	public LivroEstatus getEstatus() {
+		return LivroEstatus.valueOf(estatus);
+	}
+	
+	
+	public void setEstatus(LivroEstatus estatus) {
+		if(estatus != null) {
+		   this.estatus = estatus.getCodigo();
+		}
 	}
 
-	public void setEstatus(Integer estatus) {
-		this.estatus = estatus;
+public String getIsbn() {
+		return isbn;
+	}
+
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+
+	public Reservas getReservas() {
+		return reservas;
+	}
+
+
+	public void setReservas(Reservas reservas) {
+		this.reservas = reservas;
 	}
 
 
