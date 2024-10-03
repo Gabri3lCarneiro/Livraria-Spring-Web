@@ -19,11 +19,8 @@ import GRUPO._1.FLC21444DS.Livraria.servicos.ReservasServicos;
 
 
 @RestController
-@RequestMapping("/reservas")
+@RequestMapping("/reserva")
 public class ReservasControlador {
-
-	@Autowired
-	private ReservasRepositorio ur;
 
 	@Autowired
 	private ReservasServicos servicos;
@@ -40,7 +37,7 @@ public class ReservasControlador {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Reservas> findByid(@PathVariable Long id) {
-		Reservas obj = ur.getReferenceById(id);
+		Reservas obj = servicos.encontrarPoId(id);
 		return ResponseEntity.ok().body(obj);
         
 	}

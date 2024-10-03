@@ -24,15 +24,11 @@ import GRUPO._1.FLC21444DS.Livraria.servicos.LivroServicos;
 @RequestMapping("/livro")
 public class LivroControlador {
 
-	@Autowired
-	private LivroRepositorio ur;
 
 	@Autowired
 	private LivroServicos servicos;
 
 
-	
-	
 	@GetMapping
 	public ResponseEntity<List<Livro>> buscarTodos() {
 
@@ -42,7 +38,7 @@ public class LivroControlador {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Livro> findByid(@PathVariable Long id) {
-		Livro obj = ur.getReferenceById(id);
+		Livro obj = servicos.encontrarPoId(id);
 		return ResponseEntity.ok().body(obj);
         
 	}

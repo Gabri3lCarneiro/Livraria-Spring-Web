@@ -24,8 +24,6 @@ import GRUPO._1.FLC21444DS.Livraria.servicos.UsuarioServicos;
 @RequestMapping("/usuario")
 public class UsuarioControlador {
 
-	@Autowired
-	private UsuarioRepositorio ur;
 
 	@Autowired
 	private UsuarioServicos servicos;
@@ -42,7 +40,7 @@ public class UsuarioControlador {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Usuario> findByid(@PathVariable Long id){ 
-		Usuario obj = ur.getReferenceById(id);
+		Usuario obj = servicos.encontrarPoId(id);
 		return ResponseEntity.ok().body(obj);
         
 	}

@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import GRUPO._1.FLC21444DS.Livraria.entidades.enums.LivroEstatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,35 +23,36 @@ public class Livro implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;                                                                                                                                                                                                          
-    private String isbn;                                       
-    private String nome;                                        
-    private String autor;                                     
-    private Date dataDePubliicacao;                               
-    private String genero;                                      
-    private Integer estatus;
-    
-    @ManyToOne
-    @JoinColumn(name = "reservas_id")
-    private Reservas reservas;
-    
-    public Livro() {
-    	
-    }
-    
-    
-	public Livro(Long id, String iSBN, String nome, String autor, Date dataDePubliicacao, String genero,
+	private Long id;
+
+	private String isbn;
+	private String nome;
+	private String autor;
+
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date dataDePubliicacao;
+	private String genero;
+	private Integer estatus;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	// @JoinColumn(name = "reservas_id")
+	private Reservas reservas;
+
+	public Livro() {
+
+	}
+
+	public Livro(Long id, String isbn, String nome, String autor, Date dataDePubliicacao, String genero,
 			LivroEstatus estatus) {
 		super();
 		this.id = id;
-		this.isbn = iSBN;
+		this.isbn = isbn;
 		this.nome = nome;
 		this.autor = autor;
 		this.dataDePubliicacao = dataDePubliicacao;
 		this.genero = genero;
 		setEstatus(estatus);
 	}
-
 
 	public Long getId() {
 		return id;
@@ -62,8 +66,8 @@ public class Livro implements Serializable {
 		return isbn;
 	}
 
-	public void setISBN(String iSBN) {
-		this.isbn = iSBN;
+	public void setISBN(String isbn) {
+		this.isbn = isbn;
 	}
 
 	public String getNome() {
@@ -101,37 +105,24 @@ public class Livro implements Serializable {
 	public LivroEstatus getEstatus() {
 		return LivroEstatus.valueOf(estatus);
 	}
-	
-	
+
 	public void setEstatus(LivroEstatus estatus) {
-		if(estatus != null) {
-		   this.estatus = estatus.getCodigo();
+		if (estatus != null) {
+			this.estatus = estatus.getCodigo();
 		}
 	}
-
-public String getIsbn() {
-		return isbn;
-	}
-
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
 
 	public Reservas getReservas() {
 		return reservas;
 	}
 
-
 	public void setReservas(Reservas reservas) {
 		this.reservas = reservas;
 	}
 
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(isbn, id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -143,8 +134,9 @@ public String getIsbn() {
 		if (getClass() != obj.getClass())
 			return false;
 		Livro other = (Livro) obj;
-		return Objects.equals(isbn, other.isbn) && Objects.equals(id, other.id);
+		return Objects.equals(id, other.id);
 	}
-    
- 
+
+	
+
 }
