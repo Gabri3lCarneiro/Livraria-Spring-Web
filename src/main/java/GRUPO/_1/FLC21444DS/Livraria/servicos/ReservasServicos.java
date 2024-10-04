@@ -80,12 +80,50 @@ public class ReservasServicos {
 				}
 
 			}
+			return reservasRepositorio.save(obj);
 
 		} catch (InvalidDataAccessApiUsageException e) {
 			throw new ExecoesServicos(e.getMessage());
 
 		}
-		return reservasRepositorio.save(obj);
+		
 	}
+	
+	public Reservas devolverLivro(Reservas obj) {
+		try {
+			
+			//Reservas obj = reservasRepositorio.getReferenceById(id);
 
+			for (int i = 0; i <= obj.getLivro().size() - 1; i++) {
+				if (obj.getLivro().get(i).getEstatus() == LivroEstatus.RESERVADO) {
+					obj.getLivro().get(i).setEstatus(LivroEstatus.DISPONIVEL);
+					livroRepositorio.save(obj.getLivro().get(i));
+					
+
+				} else {
+					throw new ExecoesServicos("O livro: " + obj.getLivro() + " nao esta reservado! ");
+				}
+
+			}
+			return reservasRepositorio.save(obj);
+
+		} catch (InvalidDataAccessApiUsageException e) {
+			throw new ExecoesServicos(e.getMessage());
+
+		}
+		
+	}
+	
+	
 }
+
+/*
+ * for (int i = 0; i <= obj.getLivro().size() - 1; i++) { if
+ * (obj.getLivro().get(i).getEstatus() == LivroEstatus.DISPONIVEL) {
+ * obj.getLivro().get(i).setEstatus(LivroEstatus.RESERVADO);
+ * //obj.getLivro().get(i).setReservas(obj);
+ * livroRepositorio.save(obj.getLivro().get(i)); } } return
+ * reservasRepositorio.save(obj);
+ * 
+ * } catch (RuntimeException e) { throw new ExecoesServicos(e.getMessage()); }
+ */

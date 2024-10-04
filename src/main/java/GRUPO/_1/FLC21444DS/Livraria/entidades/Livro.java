@@ -34,14 +34,16 @@ public class Livro implements Serializable {
 	private String genero;
 	private Integer estatus;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	// @JoinColumn(name = "reservas_id")
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
 	private Reservas reservas;
+	// @JoinColumn(name = "reservas_id")
+	
 
 	public Livro() {
 
 	}
 
+    
 	public Livro(Long id, String isbn, String nome, String autor, Date dataDePubliicacao, String genero,
 			LivroEstatus estatus) {
 		super();

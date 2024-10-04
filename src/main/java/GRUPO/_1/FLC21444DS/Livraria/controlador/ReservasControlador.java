@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import GRUPO._1.FLC21444DS.Livraria.entidades.Livro;
 import GRUPO._1.FLC21444DS.Livraria.entidades.Reservas;
 import GRUPO._1.FLC21444DS.Livraria.repositorio.ReservasRepositorio;
 import GRUPO._1.FLC21444DS.Livraria.servicos.ReservasServicos;
@@ -49,7 +51,11 @@ public class ReservasControlador {
 		return ResponseEntity.created(uri).body(obj);
 	}
 
-	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Reservas> update(@PathVariable Long id, @RequestBody Reservas obj) {
+		obj = servicos.devolverLivro(obj);
+		return ResponseEntity.ok().body(obj);
+	}
 
 }
 

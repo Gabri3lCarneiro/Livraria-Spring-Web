@@ -38,7 +38,7 @@ public class Reservas implements Serializable {
     @OneToOne
     private Usuario usuario;
     
-    @OneToMany(mappedBy = "reservas")
+    @OneToMany(mappedBy = "reservas", cascade= { CascadeType.MERGE, CascadeType.REFRESH })
     private List<Livro> livro = new ArrayList();
 
     public Reservas() {

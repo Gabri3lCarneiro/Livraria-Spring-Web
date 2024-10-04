@@ -58,6 +58,7 @@ public class teste implements CommandLineRunner{
 		Reservas r1 = new Reservas(null, new Date(), new Date(), new Date(), u3, list);
 		reservasServicos.incerirReservas(r1);
 		
+		reservasServicos.devolverLivro(r1);
 	}
 
 	
